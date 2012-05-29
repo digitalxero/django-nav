@@ -36,7 +36,7 @@ def autodiscover():
     from django.conf import settings
 
     for app in settings.INSTALLED_APPS:
-        # For each app, we need to look for an tabs.py inside that app's
+        # For each app, we need to look for a tabs.py inside that app's
         # package. We can't use os.path here -- recall that modules may be
         # imported different ways (think zip files) -- so we need to get
         # the app's __path__ and look for nav.py on that path.
