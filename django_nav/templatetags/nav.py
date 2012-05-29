@@ -46,11 +46,11 @@ def resolve(var, context):
 
 class GetNavNode(template.Node):
     def __init__(self, nav_group, var_name, args, kwargs):
-            self.nav_group = nav_group
-            self.var_name = var_name
-            self.args = args
-            self.kwargs = kwargs
-            self.context = {'request': ''}
+        self.nav_group = nav_group
+        self.var_name = var_name
+        self.args = args
+        self.kwargs = kwargs
+        self.context = {'request': ''}
 
     def render(self, context):
         self.context = context
@@ -72,11 +72,10 @@ class GetNavNode(template.Node):
             if self.check_conditional(nav):
                 continue
 
-            path = self.context['request'].path
-            nav.option_list = self.build_options(nav.options, path)
+            nav.option_list = self.build_options(nav.options)
             nav.active = False
             url = nav.get_absolute_url()
-            nav.active = nav.active_if(url, path)
+            nav.active = nav.active_if(url, self.context['request'].path)
 
             self.context[self.var_name].append(
                 template.loader.render_to_string(nav.template, {'nav': nav}))
@@ -95,7 +94,7 @@ class GetNavNode(template.Node):
                 continue
 
             option.active = False
-            option.active = option.active_if(option.get_absolute_url(), path)
+            option.active = option.active_if(option.get_absolute_url(), self.context['request'].path)
             option.option_list = self.build_options(option.options)
             options.append(template.loader.render_to_string(option.template,
                                                             {'option': option}))
