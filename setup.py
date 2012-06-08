@@ -59,7 +59,10 @@ if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wininst':
         file_info[0] = '\\PURELIB\\%s' % file_info[0]
 
 # Dynamically calculate the version based on django.VERSION.
-version = __import__('django_nav').get_version()
+try:
+    version = __import__('django_nav').get_version()
+except ImportError:
+    version = '1 4 1 beta'
 
 setup(
     name = "django_nav",
@@ -70,6 +73,7 @@ setup(
     description = 'An extensible, non intrusive, fast system for generation navigation groupings.',
     keywords = 'django, navigation, navtree, nav, menu',
     download_url = 'http://django-nav.googlecode.com/files/',
+    install_requires = ['django>1.2'],
     packages = packages,
     cmdclass = cmdclasses,
     data_files = data_files,
