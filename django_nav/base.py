@@ -35,8 +35,7 @@ class NavType(object):
 
     def get_absolute_url(self):
         if self.view:
-            return reverse(self.view, args=self.args, kwargs=self.kwargs,
-                           prefix='/')
+            return reverse(self.view, args=self.args, kwargs=self.kwargs)
 
         return '#'
 
